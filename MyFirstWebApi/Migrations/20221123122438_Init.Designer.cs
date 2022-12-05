@@ -11,7 +11,7 @@ using MyFirstWebApi.Entities;
 namespace MyFirstWebApi.Migrations
 {
     [DbContext(typeof(RestaurantDbContex))]
-    [Migration("20221117193514_Init")]
+    [Migration("20221123122438_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -34,15 +34,16 @@ namespace MyFirstWebApi.Migrations
 
                     b.Property<string>("City")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("PostalCode")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Street")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -58,7 +59,6 @@ namespace MyFirstWebApi.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -90,19 +90,15 @@ namespace MyFirstWebApi.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Category")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContactEmail")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContactNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("HasDelivery")
@@ -145,8 +141,7 @@ namespace MyFirstWebApi.Migrations
 
             modelBuilder.Entity("MyFirstWebApi.Entities.Address", b =>
                 {
-                    b.Navigation("Restaurant")
-                        .IsRequired();
+                    b.Navigation("Restaurant");
                 });
 
             modelBuilder.Entity("MyFirstWebApi.Entities.Restaurant", b =>

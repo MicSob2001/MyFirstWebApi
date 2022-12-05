@@ -17,6 +17,8 @@ namespace MyFirstWebApi.Mapping
 
             CreateMap<CreateRestaurantDto, Restaurant>()
                 .ForMember(m => m.Address, c => c.MapFrom(dto => new Address() { City = dto.City, Street = dto.City, PostalCode = dto.PostalCode}));
+
+            CreateMap<CreateDishDto, Dish>();
         }
     }
 }
