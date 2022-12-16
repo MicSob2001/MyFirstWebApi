@@ -1,10 +1,8 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MyFirstWebApi.Entities;
 using MyFirstWebApi.Models;
 using MyFirstWebApi.Services;
+using System.Security.Claims;
 
 namespace MyFirstWebApi.Controllers
 {
@@ -38,11 +36,13 @@ namespace MyFirstWebApi.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult CreateRestaurant([FromBody] CreateRestaurantDto dto)
         {
+            var userId = int.Parse(User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
             int id = _restaurantService.Create(dto);
             return Created($"/api/restaurant/{id}", null);
         }
 
         [HttpGet]
+        [Authorize(Policy = "AtLeast20")]
         public ActionResult<IEnumerable<RestaurantDto>> GetAll()
         {
             var restaurantsDtos = _restaurantService.GetAll();

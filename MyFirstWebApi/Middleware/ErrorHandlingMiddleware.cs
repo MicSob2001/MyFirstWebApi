@@ -1,4 +1,5 @@
 ﻿using MyFirstWebApi.Exceptions;
+using MyFirstWebApi.Services;
 
 namespace MyFirstWebApi.Middleware
 {
@@ -15,6 +16,10 @@ namespace MyFirstWebApi.Middleware
             try
             {
                 await next.Invoke(context);
+            }
+            catch(ForbidException ex)
+            {
+                context.Response.StatusCode = 403;
             }
             catch(BadRequestException ex)
             {
